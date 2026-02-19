@@ -7,7 +7,14 @@ app.use((req, res) => {
   const target = req.query.url;
   if (!target) return res.status(400).send("Missing ?url=");
 
-  req.pipe(request(target)).pipe(res);
+  const options = {
+    url: target,
+    headers: {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+    }
+  };
+
+  request(options).pipe(res);
 });
 
 const PORT = process.env.PORT || 10000;
